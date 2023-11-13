@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,9 +40,14 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("OnTriggerEnter called with " + collision.gameObject.tag);
 
         if(collision.gameObject.tag == "Finish"){
-            animator.SetBool("IsMoving", false);
             speed = 0;
+            animator.SetBool("IsMoving", false);
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            StartCoroutine(LoadSceneAfterDelay(0, 2)); // 2 seconds delay
         }
+        StartCoroutine(LoadSceneAfterDelay(1, 2)); // 2 seconds delay
+    }
         if(collision.gameObject.tag == "Log Obstacle"){
             health -= 30;
             print(health);
@@ -60,5 +66,9 @@ public class PlayerMovement : MonoBehaviour
                 speed = 0;
             }
         }
+    }
+    IEnumerator LoadSceneAfterDelay(int sceneIndex, float delay){
+            yield return new WaitForSeconds(delay);
+            SceneManager.LoadScene(sceneBuildIndex: sceneIndex);
     }
 }
