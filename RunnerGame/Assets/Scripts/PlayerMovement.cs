@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed = 0.01f;
     [SerializeField] float health = 100f;
+    private int level = 0;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -43,30 +44,41 @@ public class PlayerMovement : MonoBehaviour
             speed = 0;
             animator.SetBool("IsMoving", false);
             animator.SetBool("IsWin", true);
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            StartCoroutine(LoadSceneAfterDelay(0, 2)); // 2 seconds delay
+            level++;
+            if (SceneManager.GetActiveScene().buildIndex == 1){
+                StartCoroutine(LoadSceneAfterDelay(0, 2)); // 2 seconds delay
+            }
+            StartCoroutine(LoadSceneAfterDelay(1, 2)); // 2 seconds delay
         }
-        StartCoroutine(LoadSceneAfterDelay(1, 2)); // 2 seconds delay
-    }
         if(collision.gameObject.tag == "Log Obstacle"){
             health -= 30;
-            print(health);
+            print("Player Health: " + health);
             if(health <= 0){
                 animator.SetBool("IsMoving", false);
                 animator.SetBool("IsDead", true);
                 speed = 0;
-                StartCoroutine(LoadSceneAfterDelay(0, 2));
+                if (SceneManager.GetActiveScene().buildIndex == 1){
+                    StartCoroutine(LoadSceneAfterDelay(1, 1)); // 2 seconds delay
+                }
+                else{
+                    StartCoroutine(LoadSceneAfterDelay(0, 1));
+                }
+                
             }
         }
         if(collision.gameObject.tag == "Rock Obstacle"){
             health -= 50;
-            print(health);
+            print("Player Health: " + health);
             if(health <= 0){
                 animator.SetBool("IsMoving", false);
                 animator.SetBool("IsDead", true);
                 speed = 0;
-                StartCoroutine(LoadSceneAfterDelay(0, 2));
+                if (SceneManager.GetActiveScene().buildIndex == 1){
+                    StartCoroutine(LoadSceneAfterDelay(1, 1)); // 2 seconds delay
+                }
+                else{
+                    StartCoroutine(LoadSceneAfterDelay(0, 1));
+                }
             }
         }
     }
