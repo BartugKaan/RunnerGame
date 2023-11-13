@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.tag == "Finish"){
             speed = 0;
             animator.SetBool("IsMoving", false);
+            animator.SetBool("IsWin", true);
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             StartCoroutine(LoadSceneAfterDelay(0, 2)); // 2 seconds delay
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsMoving", false);
                 animator.SetBool("IsDead", true);
                 speed = 0;
+                StartCoroutine(LoadSceneAfterDelay(0, 2));
             }
         }
         if(collision.gameObject.tag == "Rock Obstacle"){
@@ -64,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsMoving", false);
                 animator.SetBool("IsDead", true);
                 speed = 0;
+                StartCoroutine(LoadSceneAfterDelay(0, 2));
             }
         }
     }
